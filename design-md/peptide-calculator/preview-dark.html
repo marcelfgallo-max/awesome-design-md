@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peptide Calculator — Design System Preview (Dark)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --near-black:#0e0f0c; --wise-green:#9fe870; --dark-green:#163300;
+  --light-mint:#e2f6d5; --pastel-green:#cdffad;
+  --canvas:#ffffff; --surface:#f7f9f5; --surface-alt:#e8ebe6;
+  --text-primary:#0e0f0c; --text-secondary:#454745; --text-tertiary:#868685;
+  --border:rgba(14,15,12,0.12);
+  --positive:#054d28; --positive-bg:#e2f6d5;
+  --warning:#ffd11a; --warning-bg:#fff6d6;
+  --danger:#d03238; --danger-bg:#fdeaea;
+  --info-bg:rgba(56,200,255,0.10); --info-fg:#0e5a73;
+  --r-input:10px; --r-sm:16px; --r-md:30px; --r-lg:40px; --r-pill:9999px;
+  --ring:0 0 0 1px rgba(14,15,12,0.12);
+}
+[data-theme="dark"]{
+  --canvas:#0e0f0c; --surface:#191b16; --surface-alt:#23261f;
+  --text-primary:#f4f7f0; --text-secondary:#b4b8b0; --text-tertiary:#868685;
+  --border:rgba(255,255,255,0.10);
+  --light-mint:rgba(159,232,112,0.12);
+  --positive:#9fe870; --positive-bg:rgba(159,232,112,0.12);
+  --warning-bg:rgba(255,209,26,0.12);
+  --danger:#ff6b70; --danger-bg:rgba(208,50,56,0.15);
+  --info-bg:rgba(56,200,255,0.10); --info-fg:#7fd4ea;
+  --ring:0 0 0 1px rgba(255,255,255,0.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--canvas); color:var(--text-primary);
+  font-family:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font-weight:600; font-size:18px; line-height:1.44;
+  font-feature-settings:"calt" 1;
+  -webkit-font-smoothing:antialiased;
+}
+.num{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1,"calt" 1}
+.wrap{max-width:1120px; margin:0 auto; padding:64px 24px 96px}
+.display{font-weight:900; line-height:0.85; letter-spacing:-1px; margin:0}
+h1.display{font-size:48px}
+h2{font-weight:900; font-size:32px; line-height:0.9; letter-spacing:-0.6px; margin:0 0 8px}
+.eyebrow{font-size:12px; font-weight:600; letter-spacing:0.4px; text-transform:uppercase; color:var(--text-secondary); margin:0}
+.lede{font-weight:400; color:var(--text-secondary); max-width:62ch; margin:16px 0 0}
+section{margin-top:64px; padding-top:40px; border-top:1px solid var(--border)}
+section > .eyebrow{margin-bottom:12px}
+.sub{font-size:14px; font-weight:400; color:var(--text-secondary); margin:8px 0 24px; max-width:62ch}
+.grid{display:grid; gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* swatches */
+.sw{border-radius:var(--r-sm); overflow:hidden; box-shadow:var(--ring)}
+.sw .chip{height:88px; box-shadow:inset 0 0 0 1px var(--border)}
+.sw .meta{padding:12px 14px; background:var(--canvas)}
+.sw .name{font-size:14px; font-weight:600}
+.sw .hex{font-size:12px; font-weight:600; color:var(--text-secondary); font-variant-numeric:tabular-nums}
+
+/* type scale */
+.typerow{display:flex; gap:24px; align-items:baseline; padding:16px 0; border-bottom:1px solid var(--border)}
+.typerow .tag{flex:0 0 150px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-secondary)}
+.typerow .spec{flex:0 0 190px; font-size:12px; font-weight:600; color:var(--text-secondary); font-variant-numeric:tabular-nums}
+.typerow .demo{flex:1; min-width:0; overflow:hidden}
+
+/* buttons */
+.btn{font:inherit; font-size:18px; font-weight:600; letter-spacing:-0.11px; border:0; cursor:pointer;
+  border-radius:var(--r-pill); padding:14px 28px; transition:transform .15s ease, background .15s ease}
+.btn:hover{transform:scale(1.05)}
+.btn:active{transform:scale(0.95)}
+.btn:focus-visible{outline:2px solid var(--dark-green); outline-offset:2px}
+[data-theme="dark"] .btn:focus-visible{outline-color:var(--wise-green)}
+.btn-primary{background:var(--wise-green); color:var(--dark-green)}
+.btn-primary:hover{background:var(--pastel-green)}
+.btn-secondary{background:rgba(22,51,0,0.08); color:var(--text-primary); padding:12px 20px}
+[data-theme="dark"] .btn-secondary{background:rgba(255,255,255,0.08)}
+.btn-tertiary{background:none; color:var(--text-primary); padding:12px 8px}
+.btn-tertiary:hover{transform:none; text-decoration:underline}
+.btn[disabled]{background:var(--surface-alt); color:var(--text-tertiary); cursor:not-allowed}
+.btn[disabled]:hover{transform:none; background:var(--surface-alt)}
+.btnrow{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+
+/* inputs */
+.field{display:block}
+.field .label{display:block; font-size:14px; font-weight:600; letter-spacing:-0.08px; color:var(--text-secondary); margin-bottom:8px}
+.control{display:flex; align-items:center; gap:10px; background:var(--surface);
+  border:1px solid var(--border); border-radius:var(--r-sm); padding:12px 16px; transition:box-shadow .15s ease}
+.control:focus-within{box-shadow:0 0 0 2px var(--wise-green) inset; border-color:transparent}
+.control input{flex:1; min-width:0; border:0; background:none; color:var(--text-primary);
+  font:inherit; font-size:22px; font-weight:600; letter-spacing:-0.2px; text-align:right;
+  font-variant-numeric:tabular-nums; outline:none}
+.control input::-webkit-outer-spin-button,.control input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.control .suffix{font-size:14px; font-weight:600; color:var(--text-secondary); flex:0 0 auto}
+.control.invalid{border-color:var(--danger); box-shadow:none}
+.errmsg{font-size:14px; font-weight:600; color:var(--danger); margin:8px 0 0}
+
+/* segmented toggle */
+.seg{display:inline-flex; gap:4px; background:var(--surface); border-radius:var(--r-pill); padding:4px}
+.seg button{font:inherit; font-size:14px; font-weight:600; border:0; cursor:pointer; background:none;
+  color:var(--text-secondary); border-radius:var(--r-pill); padding:8px 18px; min-width:56px;
+  transition:transform .15s ease, background .15s ease}
+.seg button:hover{background:rgba(211,242,192,0.4)}
+.seg button:active{transform:scale(0.95)}
+.seg button[aria-checked="true"]{background:var(--wise-green); color:var(--dark-green)}
+
+/* result readout */
+.result{background:var(--light-mint); border:1px solid var(--wise-green);
+  border-radius:var(--r-lg); padding:40px 32px}
+.result .eyebrow{color:var(--positive)}
+.result .value{font-weight:900; font-size:96px; line-height:0.85; letter-spacing:-2px;
+  font-variant-numeric:tabular-nums; margin:16px 0 0; color:var(--text-primary)}
+.result .value .unit{font-size:32px; letter-spacing:-0.6px; color:var(--text-secondary); margin-left:8px}
+.result .deriv{font-size:18px; font-weight:600; color:var(--text-secondary); margin:16px 0 0}
+
+/* syringe */
+.syringe{position:relative; height:44px; background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r-pill); overflow:hidden}
+.syringe .fill{position:absolute; inset:0 auto 0 0; background:var(--wise-green);
+  border-radius:var(--r-pill); transition:width .2s ease}
+.syringe .fill.over{background:var(--danger)}
+.syringe .tick{position:absolute; top:0; bottom:0; width:1px; background:var(--border)}
+.ticklabels{display:flex; justify-content:space-between; margin-top:8px;
+  font-size:12px; font-weight:600; color:var(--text-secondary); font-variant-numeric:tabular-nums}
+
+/* cards */
+.card{background:var(--canvas); border:1px solid var(--border); border-radius:var(--r-md); padding:24px}
+.card.lg{border-radius:var(--r-lg); padding:32px}
+.card.sm{border-radius:var(--r-sm); padding:16px}
+.card .title{font-size:22px; font-weight:600; line-height:1.25; letter-spacing:-0.4px; margin:0 0 8px}
+.card p{font-size:18px; font-weight:400; color:var(--text-secondary); margin:0}
+
+/* table */
+.tablewrap{border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden}
+table{width:100%; border-collapse:collapse; font-size:16px; font-weight:600}
+thead th{background:var(--surface); text-align:left; font-size:12px; font-weight:600;
+  letter-spacing:0.4px; text-transform:uppercase; color:var(--text-secondary); padding:14px 20px}
+tbody td{padding:14px 20px; border-top:1px solid var(--border)}
+tbody tr:hover{background:rgba(211,242,192,0.4)}
+[data-theme="dark"] tbody tr:hover{background:rgba(159,232,112,0.08)}
+th.n, td.n{text-align:right; font-variant-numeric:tabular-nums}
+
+/* callouts */
+.callout{border-radius:var(--r-sm); padding:16px 20px; border-left:4px solid; font-size:16px; font-weight:600}
+.callout p{margin:0; font-weight:600}
+.callout.info{background:var(--info-bg); border-color:var(--info-fg); color:var(--info-fg)}
+.callout.ok{background:var(--positive-bg); border-color:var(--positive); color:var(--positive)}
+.callout.warn{background:var(--warning-bg); border-color:var(--warning); color:var(--text-primary)}
+.callout.err{background:var(--danger-bg); border-color:var(--danger); color:var(--danger)}
+.stack{display:grid; gap:12px}
+
+/* elevation demo */
+.elev{padding:24px; border-radius:var(--r-sm); background:var(--canvas); font-size:14px; font-weight:600}
+.elev.l0{border:1px dashed var(--border)}
+.elev.l1{box-shadow:var(--ring)}
+.elev.l2{box-shadow:0 0 0 2px var(--wise-green) inset}
+.elev.l3{border:1px solid var(--wise-green)}
+
+/* radius demo */
+.radbox{background:var(--light-mint); border:1px solid var(--wise-green); height:96px;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600;
+  color:var(--text-primary); font-variant-numeric:tabular-nums}
+
+@media (max-width:860px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:576px){
+  .wrap{padding:40px 20px 64px}
+  h1.display{font-size:40px}
+  .result .value{font-size:64px; letter-spacing:-1.4px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .typerow{flex-direction:column; gap:8px}
+  .typerow .tag,.typerow .spec{flex:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important}
+  .btn:hover,.btn:active,.seg button:active{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Design system preview · Dark</p>
+  <h1 class="display">Peptide Calculator</h1>
+  <p class="lede">Derived from the Wise design language. Wise is a converter — number in, units out — which is the same interaction shape as reconstitution dosing. Adapted here for tabular numerals, dosing-state semantics, and clinical legibility.</p>
+
+  <section>
+    <p class="eyebrow">01 — Color</p>
+    <h2>Brand</h2>
+    <p class="sub">Lime green is an accent, never a large surface. Dark green is its only text pairing.</p>
+    <div class="grid g4">
+      <div class="sw"><div class="chip" style="background:#0e0f0c"></div><div class="meta"><div class="name">Near Black</div><div class="hex">#0e0f0c</div></div></div>
+      <div class="sw"><div class="chip" style="background:#9fe870"></div><div class="meta"><div class="name">Wise Green</div><div class="hex">#9fe870</div></div></div>
+      <div class="sw"><div class="chip" style="background:#163300"></div><div class="meta"><div class="name">Dark Green</div><div class="hex">#163300</div></div></div>
+      <div class="sw"><div class="chip" style="background:#e2f6d5"></div><div class="meta"><div class="name">Light Mint</div><div class="hex">#e2f6d5</div></div></div>
+      <div class="sw"><div class="chip" style="background:#cdffad"></div><div class="meta"><div class="name">Pastel Green</div><div class="hex">#cdffad</div></div></div>
+      <div class="sw"><div class="chip" style="background:#f7f9f5"></div><div class="meta"><div class="name">Surface</div><div class="hex">#f7f9f5</div></div></div>
+      <div class="sw"><div class="chip" style="background:#e8ebe6"></div><div class="meta"><div class="name">Surface Alt</div><div class="hex">#e8ebe6</div></div></div>
+      <div class="sw"><div class="chip" style="background:#454745"></div><div class="meta"><div class="name">Text Secondary</div><div class="hex">#454745</div></div></div>
+    </div>
+
+    <h2 style="margin-top:40px">Dosing semantics</h2>
+    <p class="sub">Green means the dose is valid, amber means check it, red means do not draw it. Never decorative.</p>
+    <div class="grid g4">
+      <div class="sw"><div class="chip" style="background:#054d28"></div><div class="meta"><div class="name">Positive</div><div class="hex">#054d28</div></div></div>
+      <div class="sw"><div class="chip" style="background:#ffd11a"></div><div class="meta"><div class="name">Warning</div><div class="hex">#ffd11a</div></div></div>
+      <div class="sw"><div class="chip" style="background:#d03238"></div><div class="meta"><div class="name">Danger</div><div class="hex">#d03238</div></div></div>
+      <div class="sw"><div class="chip" style="background:#0e5a73"></div><div class="meta"><div class="name">Info</div><div class="hex">#0e5a73</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">02 — Typography</p>
+    <h2>Inter, 900 to 400</h2>
+    <p class="sub">Display at weight 900 with 0.85 line-height. Every numeral is tabular. Wise Sans if licensed; Inter 900 is the substitute — never a lighter fallback.</p>
+    <div class="typerow"><div class="tag">Result Mega</div><div class="spec">96 / 900 / 0.85 / tabular</div><div class="demo num" style="font-weight:900;font-size:96px;line-height:0.85;letter-spacing:-2px">34</div></div>
+    <div class="typerow"><div class="tag">Result Hero</div><div class="spec">64 / 900 / 0.85 / tabular</div><div class="demo num" style="font-weight:900;font-size:64px;line-height:0.85;letter-spacing:-1.4px">0.25</div></div>
+    <div class="typerow"><div class="tag">Page Title</div><div class="spec">48 / 900 / 0.85</div><div class="demo" style="font-weight:900;font-size:48px;line-height:0.85;letter-spacing:-1px">Reconstitution</div></div>
+    <div class="typerow"><div class="tag">Section Heading</div><div class="spec">32 / 900 / 0.90</div><div class="demo" style="font-weight:900;font-size:32px;line-height:0.9;letter-spacing:-0.6px">Dosage schedule</div></div>
+    <div class="typerow"><div class="tag">Card Title</div><div class="spec">22 / 600 / 1.25</div><div class="demo" style="font-size:22px;font-weight:600;letter-spacing:-0.4px">Vial concentration</div></div>
+    <div class="typerow"><div class="tag">Body</div><div class="spec">18 / 400 / 1.44</div><div class="demo" style="font-size:18px;font-weight:400">Add bacteriostatic water slowly against the vial wall.</div></div>
+    <div class="typerow"><div class="tag">Body Semibold</div><div class="spec">18 / 600 / 1.44</div><div class="demo" style="font-size:18px;font-weight:600">The default UI reading weight.</div></div>
+    <div class="typerow"><div class="tag">Table Numeric</div><div class="spec">16 / 600 / tabular</div><div class="demo num" style="font-size:16px;font-weight:600">1,250.00 · 0.25 · 34</div></div>
+    <div class="typerow"><div class="tag">Label</div><div class="spec">14 / 600 / 1.50</div><div class="demo" style="font-size:14px;font-weight:600;color:var(--text-secondary)">Diluent volume</div></div>
+    <div class="typerow"><div class="tag">Micro</div><div class="spec">12 / 600 / uppercase</div><div class="demo" style="font-size:12px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;color:var(--text-secondary)">Draw to</div></div>
+  </section>
+
+  <section>
+    <p class="eyebrow">03 — Buttons</p>
+    <h2>Pills that grow</h2>
+    <p class="sub">One primary green pill per view. Hover scales to 1.05, press compresses to 0.95.</p>
+    <div class="btnrow">
+      <button class="btn btn-primary">Calculate dose</button>
+      <button class="btn btn-secondary">Reset</button>
+      <button class="btn btn-tertiary">Copy result</button>
+      <button class="btn btn-primary" disabled>Disabled</button>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">04 — Inputs</p>
+    <h2>Numeric fields &amp; unit toggles</h2>
+    <p class="sub">Values right-aligned and tabular, unit as a non-interactive suffix. Focus draws a 2px inset lime ring.</p>
+    <div class="grid g2">
+      <label class="field">
+        <span class="label">Vial strength</span>
+        <span class="control"><input type="text" inputmode="decimal" value="5" aria-label="Vial strength"><span class="suffix">mg</span></span>
+      </label>
+      <label class="field">
+        <span class="label">Diluent volume</span>
+        <span class="control"><input type="text" inputmode="decimal" value="2.00" aria-label="Diluent volume"><span class="suffix">mL</span></span>
+      </label>
+      <label class="field">
+        <span class="label">Desired dose</span>
+        <span class="control"><input type="text" inputmode="decimal" value="250" aria-label="Desired dose"><span class="suffix">mcg</span></span>
+      </label>
+      <div class="field">
+        <span class="label">Invalid state</span>
+        <span class="control invalid"><input type="text" inputmode="decimal" value="0" aria-label="Invalid example" aria-invalid="true"><span class="suffix">mL</span></span>
+        <p class="errmsg">Diluent volume must be greater than zero.</p>
+      </div>
+    </div>
+    <div style="margin-top:24px; display:flex; gap:24px; flex-wrap:wrap">
+      <div>
+        <span class="label" style="display:block">Dose units</span>
+        <div class="seg" role="radiogroup" aria-label="Dose units">
+          <button role="radio" aria-checked="true">mg</button>
+          <button role="radio" aria-checked="false">mcg</button>
+          <button role="radio" aria-checked="false">IU</button>
+        </div>
+      </div>
+      <div>
+        <span class="label" style="display:block">Syringe type</span>
+        <div class="seg" role="radiogroup" aria-label="Syringe type">
+          <button role="radio" aria-checked="true">U-100</button>
+          <button role="radio" aria-checked="false">U-40</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">05 — Result readout</p>
+    <h2>The result is the hero</h2>
+    <p class="sub">The largest element in its viewport, always with the derivation beneath it so the math can be checked.</p>
+    <div class="result">
+      <p class="eyebrow">Draw to</p>
+      <p class="value num">10<span class="unit">units</span></p>
+      <p class="deriv">5 mg in 2.00 mL · 2.5 mg/mL · 250 mcg dose = 0.10 mL</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">06 — Syringe scale</p>
+    <h2>Fill point on a U-100 syringe</h2>
+    <p class="sub">Ticks every 10 units. An out-of-range fill turns red and is always paired with a written error.</p>
+    <div class="syringe" role="img" aria-label="Fill point at 10 of 100 units">
+      <div class="fill" style="width:10%"></div>
+      <div class="tick" style="left:10%"></div><div class="tick" style="left:20%"></div>
+      <div class="tick" style="left:30%"></div><div class="tick" style="left:40%"></div>
+      <div class="tick" style="left:50%"></div><div class="tick" style="left:60%"></div>
+      <div class="tick" style="left:70%"></div><div class="tick" style="left:80%"></div>
+      <div class="tick" style="left:90%"></div>
+    </div>
+    <div class="ticklabels"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+
+    <div style="margin-top:24px">
+      <div class="syringe" role="img" aria-label="Fill point exceeds syringe capacity">
+        <div class="fill over" style="width:100%"></div>
+      </div>
+      <div class="ticklabels"><span>0</span><span>20</span><span>40</span><span>60</span><span>80</span><span>100</span></div>
+      <div class="callout err" style="margin-top:12px"><p>Dose exceeds syringe capacity. 128 units will not fit in a 100-unit syringe — split the dose or increase the diluent volume.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">07 — Cards &amp; radii</p>
+    <h2>Radius carries the hierarchy</h2>
+    <p class="sub">40px for the calculator and result, 30px for content, 16px for compact rows. Ring shadows only.</p>
+    <div class="grid g3">
+      <div class="card lg"><p class="title">Large · 40px</p><p>Calculator card and result readout.</p></div>
+      <div class="card"><p class="title">Medium · 30px</p><p>Content cards and data tables.</p></div>
+      <div class="card sm"><p class="title">Small · 16px</p><p>Compact rows, callouts, inputs.</p></div>
+    </div>
+    <div class="grid g4" style="margin-top:16px">
+      <div class="radbox" style="border-radius:10px">10px input</div>
+      <div class="radbox" style="border-radius:16px">16px small</div>
+      <div class="radbox" style="border-radius:30px">30px medium</div>
+      <div class="radbox" style="border-radius:9999px">pill</div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">08 — Dosage schedule</p>
+    <h2>Tabular figures, right-aligned</h2>
+    <p class="sub">Numeric columns never use proportional digits — misaligned dose columns are a correctness problem.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Week</th><th class="n">Dose (mcg)</th><th class="n">Volume (mL)</th><th class="n">Units</th><th>Frequency</th></tr></thead>
+        <tbody>
+          <tr><td>1–4</td><td class="n">250</td><td class="n">0.10</td><td class="n">10</td><td>Once weekly</td></tr>
+          <tr><td>5–8</td><td class="n">500</td><td class="n">0.20</td><td class="n">20</td><td>Once weekly</td></tr>
+          <tr><td>9–12</td><td class="n">1,000</td><td class="n">0.40</td><td class="n">40</td><td>Once weekly</td></tr>
+          <tr><td>13+</td><td class="n">1,250</td><td class="n">0.50</td><td class="n">50</td><td>Once weekly</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">09 — Callouts</p>
+    <h2>Every color state also uses words</h2>
+    <p class="sub">Each callout opens with a bold noun, not a generic "Note:". The disclaimer is persistent and non-dismissible.</p>
+    <div class="stack">
+      <div class="callout ok"><p>Dose in range. 10 units on a U-100 syringe, comfortably readable against the graduations.</p></div>
+      <div class="callout warn"><p>Rounded to the nearest graduation. Calculated 10.4 units, shown as 10 — a 4% difference from the requested dose.</p></div>
+      <div class="callout err"><p>Dose below readable range. 1.2 units cannot be measured accurately on a U-100 syringe. Use less diluent or a lower-volume syringe.</p></div>
+      <div class="callout info"><p>Not medical advice. This calculator performs arithmetic only. Verify every dose against your prescriber's instructions and the product labeling before administering.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">10 — Elevation</p>
+    <h2>Depth without shadow</h2>
+    <p class="sub">Four levels, none of them a drop shadow. If something needs to feel raised, give it the accent ring.</p>
+    <div class="grid g4">
+      <div class="elev l0">Level 0 · Flat</div>
+      <div class="elev l1">Level 1 · Ring</div>
+      <div class="elev l2">Level 2 · Inset focus</div>
+      <div class="elev l3">Level 3 · Accent ring</div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">11 — Assembled</p>
+    <h2>Calculator in context</h2>
+    <div class="card lg" style="margin-top:24px">
+      <div class="grid g2" style="gap:32px; align-items:start">
+        <div class="stack" style="gap:16px">
+          <label class="field">
+            <span class="label">Vial strength</span>
+            <span class="control"><input type="text" inputmode="decimal" value="5" aria-label="Vial strength, assembled"><span class="suffix">mg</span></span>
+          </label>
+          <label class="field">
+            <span class="label">Bacteriostatic water</span>
+            <span class="control"><input type="text" inputmode="decimal" value="2.00" aria-label="Bacteriostatic water, assembled"><span class="suffix">mL</span></span>
+          </label>
+          <label class="field">
+            <span class="label">Desired dose</span>
+            <span class="control"><input type="text" inputmode="decimal" value="250" aria-label="Desired dose, assembled"><span class="suffix">mcg</span></span>
+          </label>
+          <div class="btnrow" style="margin-top:8px">
+            <button class="btn btn-primary">Calculate dose</button>
+            <button class="btn btn-secondary">Reset</button>
+          </div>
+        </div>
+        <div class="stack" style="gap:16px">
+          <div class="result">
+            <p class="eyebrow">Draw to</p>
+            <p class="value num">10<span class="unit">units</span></p>
+            <p class="deriv">2.5 mg/mL · 0.10 mL per dose</p>
+          </div>
+          <div class="syringe" role="img" aria-label="Fill point at 10 of 100 units">
+            <div class="fill" style="width:10%"></div>
+            <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div>
+          </div>
+          <div class="callout info"><p>Not medical advice. Verify against your prescriber's instructions.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
