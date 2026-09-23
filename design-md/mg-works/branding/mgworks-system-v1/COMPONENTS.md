@@ -62,9 +62,20 @@ Associar `<label for>` ao controle. Associar ajuda e erro por `aria-describedby`
 
 Item atual deve combinar indicador visual com `aria-current="page"`. Hover e foco não podem ser confundidos com seleção. Em tela estreita, oferecer menu com botão rotulado, foco controlado e Escape para fechar.
 
+### Classes (1.2.0)
+
+- **Global:** `mw-topbar` com `mw-topbar__brand`, `mw-topbar__nav` (links `mw-nav-link`), `mw-topbar__actions` e `mw-topbar__menu`. O botão de menu aparece abaixo de 720 px e controla um painel com `aria-expanded`, foco controlado e Escape para fechar.
+- **Lateral:** `mw-sidenav` com `mw-sidenav__label`, `mw-sidenav__link` e `mw-sidenav__index` opcional em mono. O item atual tem filete laranja de 2 px à esquerda, fundo `--color-surface-soft` e `aria-current="page"`.
+- **Abas:** `mw-tabs` (`role="tablist"`) com `mw-tab` (`role="tab"`, `aria-selected`, `aria-controls`) e `mw-tabpanel`. As setas movem entre as abas; só a aba ativa fica em `tabindex="0"`.
+- **Breadcrumb:** `<nav class="mw-breadcrumb" aria-label="Você está em">` com uma `<ol>`. O último item tem `aria-current="page"`. O separador `/` é gerado pelo CSS.
+
 ## Cartão e painel
 
 Cartão agrupa um assunto e uma ação. Usar superfície branca, borda sutil e raio de 8 px. Evitar cartão aninhado em cartão sem relação funcional clara. Um cartão clicável precisa ser link ou botão e expor um nome compreensível.
+
+## Seleção: checkbox e radio
+
+Usar os inputs nativos dentro de `<label class="mw-choice">`, com o texto em `<span>`. Radios ficam em `<fieldset class="mw-choice-group">` com `<legend>`. A área de toque é de 44 px de altura e o controle mede 20 px. A cor de marcação vem de `accent-color: var(--color-brand-orange)`, e o foco usa `--focus-ring`. Quando a opção está desabilitada, explicar o motivo em texto próximo.
 
 ## Etiquetas e status
 
@@ -120,9 +131,20 @@ Anatomia: `mw-alert__mark` (marca em IBM Plex Mono, `aria-hidden="true"`), `mw-a
 
 Usar apenas quando o conteúdo interrompe menos a tarefa do que navegar para uma nova página. Dialog tem nome, descrição quando necessária, foco contido e retorno ao ponto de abertura. Menu contextual possui botão disparador e navegação de teclado previsível. Menu não serve para ocultar ação primária frequente.
 
+### Classes (1.2.0)
+
+- **Diálogo:** `<dialog class="mw-dialog">` nativo, aberto com `showModal()`. Tem `mw-dialog__title` (`aria-labelledby`), `mw-dialog__body` (`aria-describedby`) e `mw-dialog__actions`, com a ação principal à direita. O fundo é escurecido a 48%, a entrada usa `--motion-slow` e, ao fechar, o foco volta ao botão que abriu.
+- **Menu:** `mw-menu` (`role="menu"`) com `mw-menu__item` (`role="menuitem"`), `mw-menu__item--danger`, `mw-menu__shortcut` e `mw-menu__separator`. Adicionar `data-open` para a animação de entrada de 180 ms. Setas navegam, Escape fecha e devolve o foco ao disparador.
+- **Toast:** `mw-toast-region` (fixo no canto inferior direito) com `mw-toast` (`role="status"`), `mw-toast__mark` e `mw-toast__action` opcional. O fundo usa `--color-ink-strong` e o texto `--color-surface-raised`, e as cores se invertem entre os temas. O toast some sozinho depois de 5 a 8 segundos, sem capturar foco. Mensagens com ação ficam visíveis enquanto o ponteiro ou o foco estiver sobre elas.
+- **Progresso:** `mw-progress` com `mw-progress__head` (`mw-progress__label` e `mw-progress__value` em mono) e `mw-progress__track` (`role="progressbar"` com `aria-valuenow` e `aria-valuetext`) contendo `mw-progress__bar`. A barra é laranja sólida. O filete cromático não indica progresso real.
+
 ## Navegação por etapa
 
 Para fluxo de várias etapas, exibir quantidade ou nomes de etapas e indicar a atual com texto. Preservar valores anteriores quando o usuário volta. Em fluxo financeiro ou comercial, resumir dados antes de confirmar e mostrar erros junto à etapa de origem.
+
+### Classes (1.2.0)
+
+`<ol class="mw-steps">` com `mw-step`. Usar `mw-step--done` para etapas concluídas (círculo com ✓) e `aria-current="step"` para a atual (círculo laranja com número). A numeração 01, 02… é gerada pelo CSS. Abaixo, `mw-steps__status` escreve "ETAPA 2 DE 3 · REVISÃO".
 
 ## Gráficos e métricas
 
@@ -131,6 +153,15 @@ Para fluxo de várias etapas, exibir quantidade ou nomes de etapas e indicar a a
 - Usar laranja para destacar uma série ou decisão importante, não para colorir todas as séries.
 - Manter uma alternativa textual ou tabular acessível.
 - Evitar eixos cortados que aumentam visualmente a variação.
+
+### Classes (1.2.0)
+
+Gráfico de barras horizontal em `<figure class="mw-chart">`: `mw-chart__title`, `mw-chart__meta` (unidade, período e fonte em mono), `mw-chart__rows` com `mw-chart__row` (`mw-chart__label`, `mw-chart__track` > `mw-chart__bar` com `width` em %, `mw-chart__value`) e `mw-chart__source`. Só a série em decisão recebe `.is-highlight` (laranja); as demais usam `--color-ink-muted`. O valor fica sempre escrito ao lado da barra. Para gráficos mais complexos, seguir as mesmas regras de cor e rótulo com a biblioteca do projeto.
+
+## Filete e placa de marca (1.2.0)
+
+- `mw-signal`: filete cromático de 64 × 2 px (`mw-signal--wide` ocupa 100%). É decorativo, então usar `aria-hidden="true"`.
+- `mw-brand-plate`: placa branca que mantém assinaturas de tinta única, como a Northbound, legíveis sobre fundo escuro sem recolorir o arquivo.
 
 ## Regras gerais de interação
 

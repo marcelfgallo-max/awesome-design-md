@@ -1,4 +1,4 @@
-/* MG Works Design System, version 1.1.0 */
+/* MG Works Design System, version 1.2.0 */
 @font-face {
   font-family: "Archivo";
   src: url("../northbound-v2/fonts/Archivo-variable.ttf") format("truetype");
@@ -134,7 +134,10 @@
   --focus-ring: 0 0 0 3px rgb(250 80 2 / 32%);
 }
 
-/* Dark theme (1.1.0). Opt-in: set data-theme="dark" on <html> or any container.
+/* Dark theme.
+   1.1.0: data-theme="dark" on <html> or any container.
+   1.2.0: with no data-theme on <html>, follows the operating system (prefers-color-scheme).
+   Use data-theme="light" to lock the light theme.
    Identity colors (brand-*, reference-*) and the signal gradient never change. */
 [data-theme="dark"] {
   color-scheme: dark;
@@ -172,4 +175,79 @@
   --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
   --shadow-overlay: 0 16px 48px rgb(0 0 0 / 60%);
   --focus-ring: 0 0 0 3px rgb(250 80 2 / 72%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --color-ink-strong: #FFFFFF;
+    --color-ink-default: #ECEDEE;
+    --color-ink-muted: #B4B7BC;
+    --color-ink-subtle: #8E9399;
+    --color-border-strong: #7A7F86;
+    --color-border-default: #3A3B3E;
+    --color-border-subtle: #2A2A2C;
+    --color-surface-page: #0E0E0E;
+    --color-surface-raised: #1A1A1A;
+    --color-surface-soft: #252424;
+    --color-surface-inverse: #000000;
+
+    --color-feedback-success: #5CC98E;
+    --color-feedback-success-soft: #10281C;
+    --color-feedback-warning: #F2B24C;
+    --color-feedback-warning-soft: #2E2206;
+    --color-feedback-danger: #FF8A7F;
+    --color-feedback-danger-soft: #3A1411;
+    --color-feedback-info: #A3D6F4;
+    --color-feedback-info-soft: #0C2433;
+    --color-feedback-danger-hover: #4A1A16;
+
+    --color-button-secondary-ink: #FFFFFF;
+    --color-control-disabled-ink: #8E9399;
+    --color-control-disabled-bg: #2A2A2C;
+    --color-control-disabled-border: #3A3B3E;
+    --color-chip-neutral-ink: #DADCE0;
+    --color-chip-neutral-bg: #2F3033;
+    --color-table-head: #151515;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%);
+    --shadow-overlay: 0 16px 48px rgb(0 0 0 / 60%);
+    --focus-ring: 0 0 0 3px rgb(250 80 2 / 72%);
+}
+}
+
+/* Light theme lock (1.2.0): data-theme="light" keeps or restores the light theme, also inside a dark container */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-ink-strong: #111111;
+  --color-ink-default: #252424;
+  --color-ink-muted: #62666B;
+  --color-ink-subtle: #858A90;
+  --color-border-strong: #8E9399;
+  --color-border-default: #CACBD2;
+  --color-border-subtle: #E6E7E9;
+  --color-surface-page: #F4F4F2;
+  --color-surface-raised: #FFFFFF;
+  --color-surface-soft: #ECEDEE;
+  --color-surface-inverse: #000000;
+  --color-feedback-success: #176B45;
+  --color-feedback-success-soft: #E4F2EA;
+  --color-feedback-warning: #835000;
+  --color-feedback-warning-soft: #FFF1D8;
+  --color-feedback-danger: #B42318;
+  --color-feedback-danger-soft: #FDE8E7;
+  --color-feedback-info: #005A86;
+  --color-feedback-info-soft: #E2F3FA;
+  --color-feedback-danger-hover: #FBD7D5;
+  --color-button-secondary-ink: #000000;
+  --color-control-disabled-ink: #666666;
+  --color-control-disabled-bg: #E3E3E3;
+  --color-control-disabled-border: #D4D4D4;
+  --color-chip-neutral-ink: #30343A;
+  --color-chip-neutral-bg: #E8E9EB;
+  --color-table-head: #F5F5F4;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 8%);
+  --shadow-overlay: 0 16px 48px rgb(0 0 0 / 18%);
+  --focus-ring: 0 0 0 3px rgb(250 80 2 / 32%);
 }

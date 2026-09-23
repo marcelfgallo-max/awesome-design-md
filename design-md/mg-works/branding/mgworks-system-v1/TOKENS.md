@@ -50,7 +50,15 @@ Sempre mostrar também um rótulo ou ícone com nome acessível. Feedback deve i
 
 ## Tema escuro
 
-Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um contêiner; sem o atributo, vale o tema claro. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
+Adicionado na versão 1.1.0 e automático desde a 1.2.0:
+
+| `<html>` | Resultado |
+| --- | --- |
+| sem `data-theme` | Segue o sistema operacional (`prefers-color-scheme`) |
+| `data-theme="light"` | Sempre claro |
+| `data-theme="dark"` | Sempre escuro |
+
+O atributo também funciona em qualquer contêiner, para exibir um bloco num tema diferente do resto da página. Produtos que ainda não revisaram o próprio CSS para o escuro devem declarar `data-theme="light"` no `<html>`. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
 
 | Token CSS | Claro | Escuro | Contraste no escuro |
 | --- | --- | --- | --- |
@@ -73,7 +81,7 @@ Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um
 | `--shadow-overlay` | 18% | 60% | idem |
 | `--focus-ring` | laranja a 32% | laranja a 72% | anel visível sobre superfícies escuras |
 
-No tema escuro, usar `logo-reverse.svg` e o avatar preto. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
+No tema escuro, usar `logo-reverse.svg` e o avatar preto. A assinatura Northbound só existe em preto: no escuro, colocá-la sobre `mw-brand-plate` (placa branca), sem recolorir. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
 
 ### Tokens de componente
 

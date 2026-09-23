@@ -1,6 +1,6 @@
 # MG Works Design System — DESIGN.md
 
-> Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Tema claro (padrão) e escuro (`data-theme="dark"`).
+> Versão 1.2.0, rascunho de sistema, 23 de setembro de 2026. Temas claro e escuro: automático pelo sistema operacional, ou fixo com `data-theme`.
 > Documento consolidado a partir dos arquivos oficiais do pacote em `branding/mgworks-system-v1/`
 > (`GUIDE.md`, `TOKENS.md`, `COMPONENTS.md`, `IMPLEMENTATION.md`, `CHANGELOG.md`). Em caso de divergência,
 > `tokens.json` e `tokens.css` são a fonte de verdade dos valores.
@@ -19,11 +19,12 @@
 
 
 
+
 ---
 
 ## MG Works Design System
 
-Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
+Versão 1.2.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
 
 ### Papel do sistema
 
@@ -65,7 +66,7 @@ Os arquivos em `branding/mgworks-v1/` são a fonte oficial da identidade MG Work
 
 #### Arquivos Northbound
 
-Usar as assinaturas aprovadas em `branding/northbound-v2/`. A direção Northbound tem símbolo próprio e não deve herdar o avatar MG Works. Para composição conjunta, manter marcas independentes, alinhar pelas linhas de base e criar separação com espaço ou divisor simples.
+Usar as assinaturas aprovadas em `branding/northbound-v2/`. O pacote tem só a versão preta: sobre fundo escuro, aplicar a placa branca `mw-brand-plate` em vez de recolorir. A direção Northbound tem símbolo próprio e não deve herdar o avatar MG Works. Para composição conjunta, manter marcas independentes, alinhar pelas linhas de base e criar separação com espaço ou divisor simples.
 
 ### Paleta
 
@@ -82,7 +83,7 @@ Esses percentuais são guias de composição, não limites matemáticos. Materia
 
 #### Tema escuro
 
-A partir da versão 1.1.0 o sistema tem um tema escuro opcional, ativado por `data-theme="dark"`. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`.
+O sistema tem tema escuro desde a versão 1.1.0. A partir da 1.2.0, sem `data-theme` no `<html>` a página segue o sistema operacional; `data-theme="light"` ou `data-theme="dark"` fixam o tema. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`. Northbound, que só tem a versão preta, fica sobre a placa branca `mw-brand-plate`.
 
 ### Tipografia
 
@@ -266,7 +267,15 @@ Sempre mostrar também um rótulo ou ícone com nome acessível. Feedback deve i
 
 ### Tema escuro
 
-Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um contêiner; sem o atributo, vale o tema claro. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
+Adicionado na versão 1.1.0 e automático desde a 1.2.0:
+
+| `<html>` | Resultado |
+| --- | --- |
+| sem `data-theme` | Segue o sistema operacional (`prefers-color-scheme`) |
+| `data-theme="light"` | Sempre claro |
+| `data-theme="dark"` | Sempre escuro |
+
+O atributo também funciona em qualquer contêiner, para exibir um bloco num tema diferente do resto da página. Produtos que ainda não revisaram o próprio CSS para o escuro devem declarar `data-theme="light"` no `<html>`. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
 
 | Token CSS | Claro | Escuro | Contraste no escuro |
 | --- | --- | --- | --- |
@@ -289,7 +298,7 @@ Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um
 | `--shadow-overlay` | 18% | 60% | idem |
 | `--focus-ring` | laranja a 32% | laranja a 72% | anel visível sobre superfícies escuras |
 
-No tema escuro, usar `logo-reverse.svg` e o avatar preto. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
+No tema escuro, usar `logo-reverse.svg` e o avatar preto. A assinatura Northbound só existe em preto: no escuro, colocá-la sobre `mw-brand-plate` (placa branca), sem recolorir. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
 
 #### Tokens de componente
 
@@ -459,9 +468,20 @@ Associar `<label for>` ao controle. Associar ajuda e erro por `aria-describedby`
 
 Item atual deve combinar indicador visual com `aria-current="page"`. Hover e foco não podem ser confundidos com seleção. Em tela estreita, oferecer menu com botão rotulado, foco controlado e Escape para fechar.
 
+#### Classes (1.2.0)
+
+- **Global:** `mw-topbar` com `mw-topbar__brand`, `mw-topbar__nav` (links `mw-nav-link`), `mw-topbar__actions` e `mw-topbar__menu`. O botão de menu aparece abaixo de 720 px e controla um painel com `aria-expanded`, foco controlado e Escape para fechar.
+- **Lateral:** `mw-sidenav` com `mw-sidenav__label`, `mw-sidenav__link` e `mw-sidenav__index` opcional em mono. O item atual tem filete laranja de 2 px à esquerda, fundo `--color-surface-soft` e `aria-current="page"`.
+- **Abas:** `mw-tabs` (`role="tablist"`) com `mw-tab` (`role="tab"`, `aria-selected`, `aria-controls`) e `mw-tabpanel`. As setas movem entre as abas; só a aba ativa fica em `tabindex="0"`.
+- **Breadcrumb:** `<nav class="mw-breadcrumb" aria-label="Você está em">` com uma `<ol>`. O último item tem `aria-current="page"`. O separador `/` é gerado pelo CSS.
+
 ### Cartão e painel
 
 Cartão agrupa um assunto e uma ação. Usar superfície branca, borda sutil e raio de 8 px. Evitar cartão aninhado em cartão sem relação funcional clara. Um cartão clicável precisa ser link ou botão e expor um nome compreensível.
+
+### Seleção: checkbox e radio
+
+Usar os inputs nativos dentro de `<label class="mw-choice">`, com o texto em `<span>`. Radios ficam em `<fieldset class="mw-choice-group">` com `<legend>`. A área de toque é de 44 px de altura e o controle mede 20 px. A cor de marcação vem de `accent-color: var(--color-brand-orange)`, e o foco usa `--focus-ring`. Quando a opção está desabilitada, explicar o motivo em texto próximo.
 
 ### Etiquetas e status
 
@@ -517,9 +537,20 @@ Anatomia: `mw-alert__mark` (marca em IBM Plex Mono, `aria-hidden="true"`), `mw-a
 
 Usar apenas quando o conteúdo interrompe menos a tarefa do que navegar para uma nova página. Dialog tem nome, descrição quando necessária, foco contido e retorno ao ponto de abertura. Menu contextual possui botão disparador e navegação de teclado previsível. Menu não serve para ocultar ação primária frequente.
 
+#### Classes (1.2.0)
+
+- **Diálogo:** `<dialog class="mw-dialog">` nativo, aberto com `showModal()`. Tem `mw-dialog__title` (`aria-labelledby`), `mw-dialog__body` (`aria-describedby`) e `mw-dialog__actions`, com a ação principal à direita. O fundo é escurecido a 48%, a entrada usa `--motion-slow` e, ao fechar, o foco volta ao botão que abriu.
+- **Menu:** `mw-menu` (`role="menu"`) com `mw-menu__item` (`role="menuitem"`), `mw-menu__item--danger`, `mw-menu__shortcut` e `mw-menu__separator`. Adicionar `data-open` para a animação de entrada de 180 ms. Setas navegam, Escape fecha e devolve o foco ao disparador.
+- **Toast:** `mw-toast-region` (fixo no canto inferior direito) com `mw-toast` (`role="status"`), `mw-toast__mark` e `mw-toast__action` opcional. O fundo usa `--color-ink-strong` e o texto `--color-surface-raised`, e as cores se invertem entre os temas. O toast some sozinho depois de 5 a 8 segundos, sem capturar foco. Mensagens com ação ficam visíveis enquanto o ponteiro ou o foco estiver sobre elas.
+- **Progresso:** `mw-progress` com `mw-progress__head` (`mw-progress__label` e `mw-progress__value` em mono) e `mw-progress__track` (`role="progressbar"` com `aria-valuenow` e `aria-valuetext`) contendo `mw-progress__bar`. A barra é laranja sólida. O filete cromático não indica progresso real.
+
 ### Navegação por etapa
 
 Para fluxo de várias etapas, exibir quantidade ou nomes de etapas e indicar a atual com texto. Preservar valores anteriores quando o usuário volta. Em fluxo financeiro ou comercial, resumir dados antes de confirmar e mostrar erros junto à etapa de origem.
+
+#### Classes (1.2.0)
+
+`<ol class="mw-steps">` com `mw-step`. Usar `mw-step--done` para etapas concluídas (círculo com ✓) e `aria-current="step"` para a atual (círculo laranja com número). A numeração 01, 02… é gerada pelo CSS. Abaixo, `mw-steps__status` escreve "ETAPA 2 DE 3 · REVISÃO".
 
 ### Gráficos e métricas
 
@@ -528,6 +559,15 @@ Para fluxo de várias etapas, exibir quantidade ou nomes de etapas e indicar a a
 - Usar laranja para destacar uma série ou decisão importante, não para colorir todas as séries.
 - Manter uma alternativa textual ou tabular acessível.
 - Evitar eixos cortados que aumentam visualmente a variação.
+
+#### Classes (1.2.0)
+
+Gráfico de barras horizontal em `<figure class="mw-chart">`: `mw-chart__title`, `mw-chart__meta` (unidade, período e fonte em mono), `mw-chart__rows` com `mw-chart__row` (`mw-chart__label`, `mw-chart__track` > `mw-chart__bar` com `width` em %, `mw-chart__value`) e `mw-chart__source`. Só a série em decisão recebe `.is-highlight` (laranja); as demais usam `--color-ink-muted`. O valor fica sempre escrito ao lado da barra. Para gráficos mais complexos, seguir as mesmas regras de cor e rótulo com a biblioteca do projeto.
+
+### Filete e placa de marca (1.2.0)
+
+- `mw-signal`: filete cromático de 64 × 2 px (`mw-signal--wide` ocupa 100%). É decorativo, então usar `aria-hidden="true"`.
+- `mw-brand-plate`: placa branca que mantém assinaturas de tinta única, como a Northbound, legíveis sobre fundo escuro sem recolorir o arquivo.
 
 ### Regras gerais de interação
 
@@ -582,6 +622,16 @@ As classes `mw-button--secondary`, `mw-button--quiet`, `mw-button--text`, `mw-bu
 
 Se houver erro, inclua a mensagem no `aria-describedby` e aplique `aria-invalid="true"`. Preserve o texto já digitado.
 
+### Tema
+
+Sem `data-theme` no `<html>`, a página segue o tema do sistema operacional. Para fixar o tema:
+
+```html
+<html lang="pt-BR" data-theme="light">
+```
+
+Use `data-theme="dark"` para fixar o escuro. Estilos próprios do projeto devem usar os tokens semânticos (`--color-ink-*`, `--color-surface-*`, `--color-border-*`, `--color-feedback-*`) para acompanhar os dois temas. Enquanto isso não for revisado, fixe `data-theme="light"`.
+
 ### Adaptação de marca
 
 1. Manter os arquivos oficiais de logo da marca que aparece na interface.
@@ -605,6 +655,21 @@ Este pacote ainda não usa um compilador de tokens. A sincronização entre JSON
 ---
 
 ## Histórico
+
+### 1.2.0 · 23 de setembro de 2026
+
+- **Tema automático.** Sem `data-theme` no `<html>`, `tokens.css` segue `prefers-color-scheme`. O novo bloco `[data-theme="light"]` fixa o claro, inclusive dentro de um contêiner escuro.
+  - Motivo: respeitar a preferência do sistema de quem usa.
+  - Impacto: páginas sem `data-theme` passam a ficar escuras em sistemas configurados no modo escuro.
+  - Migração: projetos com CSS próprio que ainda não usa tokens semânticos devem declarar `data-theme="light"` no `<html>`. O catálogo `index.html` já faz isso.
+- **Novos componentes em `components.css`**, que antes só existiam como padrões em `COMPONENTS.md`:
+  - navegação global (`mw-topbar`, `mw-nav-link`), lateral (`mw-sidenav`), abas (`mw-tabs`) e breadcrumb (`mw-breadcrumb`);
+  - checkbox e radio (`mw-choice`), diálogo (`mw-dialog`), menu contextual (`mw-menu`) e toast (`mw-toast`);
+  - barra de progresso (`mw-progress`), etapas (`mw-steps`) e gráfico de barras (`mw-chart`);
+  - filete cromático (`mw-signal`) e placa de marca (`mw-brand-plate`).
+  - Impacto: somente adições. Nenhuma classe existente mudou.
+- **Northbound no escuro.** O pacote tem só a assinatura preta. A regra agora é aplicar `mw-brand-plate` em fundo escuro, sem recolorir o arquivo, até existir uma versão reversa aprovada.
+- **Catálogo.** Demonstrações de todos os novos componentes e do Northbound sobre fundo escuro.
 
 ### 1.1.0 · 23 de setembro de 2026
 

@@ -1,6 +1,6 @@
 # MG Works Design System
 
-Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
+Versão 1.2.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
 
 ## Papel do sistema
 
@@ -42,7 +42,7 @@ Os arquivos em `branding/mgworks-v1/` são a fonte oficial da identidade MG Work
 
 ### Arquivos Northbound
 
-Usar as assinaturas aprovadas em `branding/northbound-v2/`. A direção Northbound tem símbolo próprio e não deve herdar o avatar MG Works. Para composição conjunta, manter marcas independentes, alinhar pelas linhas de base e criar separação com espaço ou divisor simples.
+Usar as assinaturas aprovadas em `branding/northbound-v2/`. O pacote tem só a versão preta: sobre fundo escuro, aplicar a placa branca `mw-brand-plate` em vez de recolorir. A direção Northbound tem símbolo próprio e não deve herdar o avatar MG Works. Para composição conjunta, manter marcas independentes, alinhar pelas linhas de base e criar separação com espaço ou divisor simples.
 
 ## Paleta
 
@@ -59,7 +59,7 @@ Esses percentuais são guias de composição, não limites matemáticos. Materia
 
 ### Tema escuro
 
-A partir da versão 1.1.0 o sistema tem um tema escuro opcional, ativado por `data-theme="dark"`. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`.
+O sistema tem tema escuro desde a versão 1.1.0. A partir da 1.2.0, sem `data-theme` no `<html>` a página segue o sistema operacional; `data-theme="light"` ou `data-theme="dark"` fixam o tema. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`. Northbound, que só tem a versão preta, fica sobre a placa branca `mw-brand-plate`.
 
 ## Tipografia
 

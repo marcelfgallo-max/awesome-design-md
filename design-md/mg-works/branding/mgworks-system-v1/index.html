@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -163,6 +163,12 @@
     .graphic-bottom p { max-width: 180px; margin: 0; font-size: 12px; line-height: 1.4; }
 
     .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 20px 0 28px; }
+    .demo-stack { display: grid; gap: 14px; margin-top: 34px; }
+    .demo-card { padding: 20px; color: var(--color-ink-default); background: var(--color-surface-raised); border: 1px solid var(--color-border-default); }
+    .demo-card > h3 { margin: 0 0 16px; color: var(--color-ink-strong); font-size: 15px; font-weight: 600; }
+    .demo-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .demo-toast { position: static; }
+    @media (max-width: 720px) { .demo-split { grid-template-columns: 1fr; } }
     .component-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .component-card { padding: 20px; color: var(--color-ink-default); background: var(--color-surface-raised); border: 1px solid var(--color-border-default); }
     .component-card h3 { color: var(--color-ink-strong); }
@@ -281,14 +287,14 @@
     <div class="rail-bottom">
       <div class="rail-signal" aria-hidden="true"></div>
       <p><strong>MG Works</strong> · AI, Design &amp; Technology</p>
-      <p>23.09.2026 · v1.1.0</p>
+      <p>23.09.2026 · v1.2.0</p>
     </div>
   </aside>
 
   <div class="workspace">
     <div class="topline">
       <div class="crumb"><strong>Design System</strong><span>/</span><span>Fundamentos e interface</span></div>
-      <span class="status-chip"><span class="status-dot" aria-hidden="true"></span>VERSÃO 1.1.0 · RASCUNHO</span>
+      <span class="status-chip"><span class="status-dot" aria-hidden="true"></span>VERSÃO 1.2.0 · RASCUNHO</span>
     </div>
 
     <main id="conteudo">
@@ -473,6 +479,63 @@
           <article class="pattern-card"><span class="mono">PADRÃO / 02</span><div class="pattern-mark" aria-hidden="true"></div><h3>Revisar</h3><p>Resumo traz fonte, status e consequência antes da confirmação.</p></article>
           <article class="pattern-card"><span class="mono">PADRÃO / 03</span><div class="pattern-mark" aria-hidden="true"></div><h3>Resolver</h3><p>Feedback associa a condição ao campo ou item que precisa de atenção.</p></article>
         </div>
+        <div class="demo-stack">
+          <div class="demo-card">
+            <h3>Navegação global</h3>
+            <header class="mw-topbar">
+              <a class="mw-topbar__brand" href="#inicio"><img src="../mgworks-v1/logo-primary.svg" alt="MG Works, início"></a>
+              <nav class="mw-topbar__nav" aria-label="Principal"><a class="mw-nav-link" href="#padroes" aria-current="page">Projetos</a><a class="mw-nav-link" href="#padroes">Relatórios</a><a class="mw-nav-link" href="#padroes">Equipe</a></nav>
+              <div class="mw-topbar__actions"><button class="mw-button mw-button--quiet mw-button--small mw-topbar__menu" type="button" aria-expanded="false">Menu</button><button class="mw-button mw-button--primary mw-button--small" type="button">Novo projeto</button></div>
+            </header>
+            <nav class="mw-breadcrumb" aria-label="Você está em" style="margin-top:16px"><ol><li><a href="#padroes">Projetos</a></li><li><a href="#padroes">Direção de marca</a></li><li><span aria-current="page">Entregas</span></li></ol></nav>
+          </div>
+          <div class="demo-split">
+            <div class="demo-card">
+              <h3>Navegação lateral</h3>
+              <nav class="mw-sidenav" aria-label="Seções do projeto"><p class="mw-sidenav__label">Projeto</p><a class="mw-sidenav__link" href="#padroes" aria-current="page"><span class="mw-sidenav__index">01</span>Visão geral</a><a class="mw-sidenav__link" href="#padroes"><span class="mw-sidenav__index">02</span>Entregas</a><a class="mw-sidenav__link" href="#padroes"><span class="mw-sidenav__index">03</span>Arquivos</a><a class="mw-sidenav__link" href="#padroes"><span class="mw-sidenav__index">04</span>Configurações</a></nav>
+            </div>
+            <div class="demo-card">
+              <h3>Abas</h3>
+              <div class="mw-tabs" role="tablist" aria-label="Visões do relatório"><button class="mw-tab" role="tab" id="tab-resumo" aria-selected="true" aria-controls="painel-resumo">Resumo</button><button class="mw-tab" role="tab" id="tab-detalhe" aria-selected="false" aria-controls="painel-resumo" tabindex="-1">Detalhe</button><button class="mw-tab" role="tab" id="tab-historico" aria-selected="false" aria-controls="painel-resumo" tabindex="-1">Histórico</button></div>
+              <div class="mw-tabpanel" role="tabpanel" id="painel-resumo" aria-labelledby="tab-resumo">Visões irmãs do mesmo contexto, não passos de um fluxo.</div>
+            </div>
+          </div>
+          <div class="demo-split">
+            <div class="demo-card">
+              <h3>Seleção</h3>
+              <fieldset class="mw-choice-group"><legend>Formato de entrega</legend><label class="mw-choice"><input type="radio" name="formato" checked><span>Apresentação</span></label><label class="mw-choice"><input type="radio" name="formato"><span>Documento</span></label></fieldset>
+              <label class="mw-choice"><input type="checkbox" checked><span>Incluir anexos</span></label>
+            </div>
+            <div class="demo-card">
+              <h3>Etapas e progresso</h3>
+              <ol class="mw-steps" aria-label="Etapas do envio"><li class="mw-step mw-step--done">Dados</li><li class="mw-step" aria-current="step">Revisão</li><li class="mw-step">Confirmação</li></ol>
+              <p class="mw-steps__status">ETAPA 2 DE 3 · REVISÃO</p>
+              <div class="mw-progress" style="margin-top:20px"><div class="mw-progress__head"><span class="mw-progress__label" id="envio-rotulo">Enviando arquivos</span><span class="mw-progress__value">3 de 5 · 60%</span></div><div class="mw-progress__track" role="progressbar" aria-labelledby="envio-rotulo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60" aria-valuetext="3 de 5 arquivos"><div class="mw-progress__bar" style="width:60%"></div></div></div>
+            </div>
+          </div>
+          <div class="demo-split">
+            <div class="demo-card">
+              <h3>Menu contextual e diálogo</h3>
+              <ul class="mw-menu" role="menu" aria-label="Ações do projeto"><li role="none"><button class="mw-menu__item" role="menuitem" type="button">Duplicar<span class="mw-menu__shortcut">⌘D</span></button></li><li role="none"><button class="mw-menu__item" role="menuitem" type="button">Mover para pasta</button></li><li class="mw-menu__separator" role="separator"></li><li role="none"><button class="mw-menu__item mw-menu__item--danger" role="menuitem" type="button" id="abrir-dialogo">Excluir projeto</button></li></ul>
+              <dialog class="mw-dialog" id="dialogo-excluir" aria-labelledby="dialogo-titulo" aria-describedby="dialogo-texto"><h2 class="mw-dialog__title" id="dialogo-titulo">Excluir projeto?</h2><p class="mw-dialog__body" id="dialogo-texto">O projeto e as entregas saem da lista. Arquivos exportados continuam salvos.</p><form class="mw-dialog__actions" method="dialog"><button class="mw-button mw-button--secondary" value="cancel">Cancelar</button><button class="mw-button mw-button--danger" value="confirm">Excluir projeto</button></form></dialog>
+            </div>
+            <div class="demo-card">
+              <h3>Toast</h3>
+              <div class="mw-toast demo-toast" role="status"><span class="mw-toast__mark" aria-hidden="true">✓</span><span>Rascunho salvo.</span><button class="mw-toast__action" type="button">Desfazer</button></div>
+              <p class="caption">Na interface, o toast fica em <span class="mono">mw-toast-region</span>, fixo no canto inferior direito.</p>
+            </div>
+          </div>
+          <div class="demo-card">
+            <figure class="mw-chart"><figcaption><p class="mw-chart__title">Horas por frente de trabalho</p><p class="mw-chart__meta">HORAS · SETEMBRO 2026 · DADOS ILUSTRATIVOS</p></figcaption>
+              <ul class="mw-chart__rows"><li class="mw-chart__row is-highlight"><span class="mw-chart__label">Experiência digital</span><span class="mw-chart__track"><span class="mw-chart__bar" style="display:block;width:82%"></span></span><span class="mw-chart__value">164 h</span></li><li class="mw-chart__row"><span class="mw-chart__label">Inteligência de mercado</span><span class="mw-chart__track"><span class="mw-chart__bar" style="display:block;width:56%"></span></span><span class="mw-chart__value">112 h</span></li><li class="mw-chart__row"><span class="mw-chart__label">Automação</span><span class="mw-chart__track"><span class="mw-chart__bar" style="display:block;width:31%"></span></span><span class="mw-chart__value">62 h</span></li></ul>
+              <p class="mw-chart__source">Laranja destaca a série em decisão. Valores sempre escritos.</p></figure>
+          </div>
+          <div class="demo-card" data-theme="dark" style="background:var(--color-surface-page)">
+            <h3>Northbound no tema escuro</h3>
+            <span class="mw-brand-plate"><img src="../northbound-v2/logo-primary.svg" alt="Northbound" style="display:block;height:28px;width:auto"></span>
+            <p class="caption" style="color:var(--color-ink-muted)">A assinatura Northbound tem só a versão preta. No escuro, ela fica sobre a placa branca <span class="mono">mw-brand-plate</span>, sem recolorir o arquivo.</p>
+          </div>
+        </div>
       </section>
 
       <section class="section" id="aplicacoes" aria-labelledby="aplicacoes-titulo">
@@ -511,6 +574,14 @@
       }, { rootMargin: "-15% 0px -68% 0px", threshold: [0, 0.15, 0.35, 0.6] });
 
       targets.forEach((target) => observer.observe(target));
+    })();
+    (() => {
+      const dialog = document.getElementById("dialogo-excluir");
+      const opener = document.getElementById("abrir-dialogo");
+      if (dialog && opener && dialog.showModal) {
+        opener.addEventListener("click", () => dialog.showModal());
+        dialog.addEventListener("close", () => opener.focus());
+      }
     })();
   </script>
 </body>

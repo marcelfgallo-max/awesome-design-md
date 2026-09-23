@@ -39,6 +39,16 @@ As classes `mw-button--secondary`, `mw-button--quiet`, `mw-button--text`, `mw-bu
 
 Se houver erro, inclua a mensagem no `aria-describedby` e aplique `aria-invalid="true"`. Preserve o texto já digitado.
 
+## Tema
+
+Sem `data-theme` no `<html>`, a página segue o tema do sistema operacional. Para fixar o tema:
+
+```html
+<html lang="pt-BR" data-theme="light">
+```
+
+Use `data-theme="dark"` para fixar o escuro. Estilos próprios do projeto devem usar os tokens semânticos (`--color-ink-*`, `--color-surface-*`, `--color-border-*`, `--color-feedback-*`) para acompanhar os dois temas. Enquanto isso não for revisado, fixe `data-theme="light"`.
+
 ## Adaptação de marca
 
 1. Manter os arquivos oficiais de logo da marca que aparece na interface.
