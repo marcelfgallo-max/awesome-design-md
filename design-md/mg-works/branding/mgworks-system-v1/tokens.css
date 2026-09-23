@@ -1,0 +1,125 @@
+/* MG Works Design System, version 1.0.0 */
+@font-face {
+  font-family: "Archivo";
+  src: url("../northbound-v2/fonts/Archivo-variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../northbound-v2/fonts/IBMPlexMono-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("../northbound-v2/fonts/IBMPlexMono-Medium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Brand and reference colors */
+  --color-brand-orange: #FA5002;
+  --color-brand-black: #000000;
+  --color-brand-white: #FFFFFF;
+  --color-reference-charcoal: #252424;
+  --color-reference-mist: #CACBD2;
+  --color-reference-gray: #DADCE0;
+  --color-reference-blaze: #F67300;
+  --color-reference-cyan: #A3D6F4;
+
+  /* Interface neutrals */
+  --color-ink-strong: #111111;
+  --color-ink-default: #252424;
+  --color-ink-muted: #62666B;
+  --color-ink-subtle: #858A90;
+  --color-border-strong: #8E9399;
+  --color-border-default: #CACBD2;
+  --color-border-subtle: #E6E7E9;
+  --color-surface-page: #F4F4F2;
+  --color-surface-raised: #FFFFFF;
+  --color-surface-soft: #ECEDEE;
+  --color-surface-inverse: #000000;
+
+  /* Semantic colors, chosen for readable text pairs */
+  --color-feedback-success: #176B45;
+  --color-feedback-success-soft: #E4F2EA;
+  --color-feedback-warning: #835000;
+  --color-feedback-warning-soft: #FFF1D8;
+  --color-feedback-danger: #B42318;
+  --color-feedback-danger-soft: #FDE8E7;
+  --color-feedback-info: #005A86;
+  --color-feedback-info-soft: #E2F3FA;
+
+  /* The reference gradient is an expressive accent, never a text color */
+  --color-signal-gradient: linear-gradient(90deg, #FA5002 0%, #CACBD2 54%, #A3D6F4 100%);
+
+  /* Typography */
+  --font-family-sans: "Archivo", Arial, sans-serif;
+  --font-family-mono: "IBM Plex Mono", "Courier New", monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-11: 0.6875rem;
+  --font-size-12: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-18: 1.125rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-32: 2rem;
+  --font-size-40: 2.5rem;
+  --font-size-48: 3rem;
+  --font-size-64: 4rem;
+  --line-height-tight: 1.05;
+  --line-height-heading: 1.12;
+  --line-height-body: 1.5;
+  --line-height-relaxed: 1.65;
+  --letter-spacing-label: 0.08em;
+
+  /* Spacing, in 4px steps */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Shape and elevation */
+  --border-width-hairline: 1px;
+  --border-width-strong: 2px;
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+  --shadow-none: none;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 8%);
+  --shadow-overlay: 0 16px 48px rgb(0 0 0 / 18%);
+
+  /* Layout and motion */
+  --container-max: 1280px;
+  --grid-columns-desktop: 12;
+  --grid-gutter: 24px;
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 260ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0.75, 0.25, 1);
+  --focus-ring: 0 0 0 3px rgb(250 80 2 / 32%);
+}
