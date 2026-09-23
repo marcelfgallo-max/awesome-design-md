@@ -7,6 +7,8 @@ description: Sistema visual MG Works (e camada digital compartilhada com Northbo
 
 O pacote completo está instalado em `design-md/mg-works/` (versão 1.0.0, 22/09/2026). Ele é a fonte de verdade — não invente valores.
 
+Versão no Claude Design (design system navegável): https://claude.ai/artifact/TbqF6PHUbrwmQ5GCcxad2E
+
 ## Ordem de leitura
 
 1. `design-md/mg-works/DESIGN.md` — documento consolidado (guia, tokens, componentes, implementação).
