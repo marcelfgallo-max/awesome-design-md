@@ -105,6 +105,17 @@ Incluir carregamento, vazio, resultado encontrado, erro de leitura e conjunto lo
 
 Mensagens devem informar o que ocorreu e como resolver. Nunca esconder a origem do erro.
 
+### Mensagem inline e alerta (`mw-alert`)
+
+| Variante | Classe | Marca | Exemplo |
+| --- | --- | --- | --- |
+| Informação | `mw-alert--info` | `i` | Dados de exemplo |
+| Sucesso | `mw-alert--success` | `✓` | Rascunho salvo |
+| Atenção | `mw-alert--warning` | `!` | Confirme antes de avançar |
+| Erro | `mw-alert--danger` | `×` | Não foi possível ler o arquivo |
+
+Anatomia: `mw-alert__mark` (marca em IBM Plex Mono, `aria-hidden="true"`), `mw-alert__title` (fato, em uma linha) e `mw-alert__content` (o que ocorreu e como resolver). A marca e o título repetem o significado da cor. Alerta que aparece depois de uma ação usa `role="status"` (informação, sucesso) ou `role="alert"` (erro que bloqueia). Não fechar sozinho alertas de atenção ou erro.
+
 ## Modal e menu contextual
 
 Usar apenas quando o conteúdo interrompe menos a tarefa do que navegar para uma nova página. Dialog tem nome, descrição quando necessária, foco contido e retorno ao ponto de abertura. Menu contextual possui botão disparador e navegação de teclado previsível. Menu não serve para ocultar ação primária frequente.

@@ -1,8 +1,8 @@
 # MG Works Design System — DESIGN.md
 
-> Versão 1.0.0, rascunho de sistema, 22 de setembro de 2026.
+> Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Tema claro (padrão) e escuro (`data-theme="dark"`).
 > Documento consolidado a partir dos arquivos oficiais do pacote em `branding/mgworks-system-v1/`
-> (`GUIDE.md`, `TOKENS.md`, `COMPONENTS.md`, `IMPLEMENTATION.md`). Em caso de divergência,
+> (`GUIDE.md`, `TOKENS.md`, `COMPONENTS.md`, `IMPLEMENTATION.md`, `CHANGELOG.md`). Em caso de divergência,
 > `tokens.json` e `tokens.css` são a fonte de verdade dos valores.
 
 ## Arquivos-fonte
@@ -18,11 +18,12 @@
 | `branding/northbound-v2/fonts/` | Archivo (variável) e IBM Plex Mono, licenças SIL OFL |
 
 
+
 ---
 
 ## MG Works Design System
 
-Versão 1.0.0, rascunho de sistema, 22 de setembro de 2026.
+Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
 
 ### Papel do sistema
 
@@ -78,6 +79,10 @@ Preto, branco e laranja pertencem à identidade. Carvão, névoa, cinza claro e 
 - O filete em gradiente é um acento gráfico, não uma cor de texto nem uma assinatura de marca.
 
 Esses percentuais são guias de composição, não limites matemáticos. Materiais de alto contraste podem usar uma superfície preta dominante.
+
+#### Tema escuro
+
+A partir da versão 1.1.0 o sistema tem um tema escuro opcional, ativado por `data-theme="dark"`. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`.
 
 ### Tipografia
 
@@ -140,6 +145,21 @@ Preferir retângulos retos, círculos simples, recortes geométricos e linhas. C
 
 Movimento é breve, funcional e não essencial para compreender o conteúdo. Usar 120 ms para resposta simples, 180 ms para componentes e até 260 ms para painéis. Em `prefers-reduced-motion: reduce`, remover deslocamentos e transições não essenciais.
 
+
+#### Tokens de movimento
+
+| Token | Valor | Quando usar |
+| --- | --- | --- |
+| `--motion-fast` | 120 ms | Resposta simples: hover, pressionado, cor, borda e foco de botões, campos e links |
+| `--motion-base` | 180 ms | Componentes: abrir menu, mostrar toast, expandir cartão ou acordeão |
+| `--motion-slow` | 260 ms | Painéis: gaveta lateral, modal, troca de painel |
+| `--motion-ease-standard` | `cubic-bezier(0.2, 0.75, 0.25, 1)` | Curva única do sistema, entrada rápida e assentamento suave |
+
+- Animar cor, opacidade e deslocamentos curtos (até 8 px). Evitar escala grande, rotação, parallax e efeitos elásticos.
+- Não animar dados, valores numéricos ou estados de erro para chamar atenção.
+- `components.css` já aplica `--motion-fast` com `--motion-ease-standard` em `mw-button`.
+- Em `prefers-reduced-motion: reduce`, reduzir a duração a praticamente zero e manter o estado final.
+
 ### Voz e conteúdo
 
 - Ser claro, específico e calmo.
@@ -190,6 +210,7 @@ Uma mensagem por peça. Usar título grande, espaço negativo e um acento gráfi
 Referência observada em 22 de setembro de 2026: [DEVENZ STUDIO no Behance](https://www.behance.net/gallery/255636053/DEVENZ-STUDIO), projeto de identidade visual publicado em setembro de 2026 por ROBRAND/STUDIO, Rodrigo Balbino e Pedro Soares.
 
 Elementos traduzidos para este sistema: preto e branco dominantes, composição modular, traços e divisores finos, tipografia sans geométrica, rotulagem em mono, paleta carvão e cinzas, e filete cromático do laranja ao azul claro. A assinatura Devenz, seu símbolo, fotografias e texto de marca não foram reutilizados. Os tokens de base MG Works e Northbound vêm dos materiais locais existentes; as extensões visuais são propostas para esta camada compartilhada.
+
 
 ---
 
@@ -242,6 +263,48 @@ Sempre mostrar também um rótulo ou ícone com nome acessível. Feedback deve i
 - Sobre branco, texto principal usa `--color-ink-default` ou `--color-ink-strong`.
 - `--color-ink-subtle` não identifica erro, estado ou instrução indispensável. Usar em informação complementar com tamanho e contraste adequados.
 - Em dados, parear a cor com nome, forma ou padrão.
+
+### Tema escuro
+
+Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um contêiner; sem o atributo, vale o tema claro. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
+
+| Token CSS | Claro | Escuro | Contraste no escuro |
+| --- | --- | --- | --- |
+| `--color-ink-strong` | `#111111` | `#FFFFFF` | 17.4:1 sobre raised |
+| `--color-ink-default` | `#252424` | `#ECEDEE` | 14.9:1 sobre raised |
+| `--color-ink-muted` | `#62666B` | `#B4B7BC` | 8.7:1 sobre raised |
+| `--color-ink-subtle` | `#858A90` | `#8E9399` | 5.6:1 sobre raised |
+| `--color-border-strong` | `#8E9399` | `#7A7F86` | 3.8:1 sobre soft, limite de controle |
+| `--color-border-default` | `#CACBD2` | `#3A3B3E` | divisor decorativo |
+| `--color-border-subtle` | `#E6E7E9` | `#2A2A2C` | separador secundário |
+| `--color-surface-page` | `#F4F4F2` | `#0E0E0E` | fundo de página |
+| `--color-surface-raised` | `#FFFFFF` | `#1A1A1A` | cartões, campos, menus |
+| `--color-surface-soft` | `#ECEDEE` | `#252424` | superfície auxiliar (carvão) |
+| `--color-surface-inverse` | `#000000` | `#000000` | capa e rodapé |
+| `--color-feedback-success` / `-soft` | `#176B45` / `#E4F2EA` | `#5CC98E` / `#10281C` | 7.6:1 |
+| `--color-feedback-warning` / `-soft` | `#835000` / `#FFF1D8` | `#F2B24C` / `#2E2206` | 8.4:1 |
+| `--color-feedback-danger` / `-soft` | `#B42318` / `#FDE8E7` | `#FF8A7F` / `#3A1411` | 7.1:1 |
+| `--color-feedback-info` / `-soft` | `#005A86` / `#E2F3FA` | `#A3D6F4` / `#0C2433` | 10.3:1 |
+| `--shadow-card` | 8% | 40% | sombra mais densa para ler sobre fundo escuro |
+| `--shadow-overlay` | 18% | 60% | idem |
+| `--focus-ring` | laranja a 32% | laranja a 72% | anel visível sobre superfícies escuras |
+
+No tema escuro, usar `logo-reverse.svg` e o avatar preto. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
+
+#### Tokens de componente
+
+Adicionados na versão 1.1.0 para substituir valores fixos em `components.css` e permitir o tema escuro.
+
+| Token CSS | Claro | Escuro | Uso |
+| --- | --- | --- | --- |
+| `--color-button-secondary-ink` | `#000000` | `#FFFFFF` | Texto do botão secundário |
+| `--color-control-disabled-ink` | `#666666` | `#8E9399` | Texto de controle desabilitado |
+| `--color-control-disabled-bg` | `#E3E3E3` | `#2A2A2C` | Fundo de controle desabilitado |
+| `--color-control-disabled-border` | `#D4D4D4` | `#3A3B3E` | Borda de controle desabilitado |
+| `--color-feedback-danger-hover` | `#FBD7D5` | `#4A1A16` | Hover do botão de perigo |
+| `--color-chip-neutral-ink` | `#30343A` | `#DADCE0` | Texto do chip neutro |
+| `--color-chip-neutral-bg` | `#E8E9EB` | `#2F3033` | Fundo do chip neutro |
+| `--color-table-head` | `#F5F5F4` | `#151515` | Fundo do cabeçalho de tabela |
 
 ### Tipografia
 
@@ -328,6 +391,7 @@ Elevação não substitui borda, contraste ou hierarquia. Em materiais editoriai
 | `--focus-ring` | anel de 3 px com laranja de marca a 32% |
 
 Tablet usa 8 colunas. Celular usa 4 colunas. Para motion reduzido, zerar duração ou remover a transição que causa movimento.
+
 
 ---
 
@@ -438,6 +502,17 @@ Incluir carregamento, vazio, resultado encontrado, erro de leitura e conjunto lo
 
 Mensagens devem informar o que ocorreu e como resolver. Nunca esconder a origem do erro.
 
+#### Mensagem inline e alerta (`mw-alert`)
+
+| Variante | Classe | Marca | Exemplo |
+| --- | --- | --- | --- |
+| Informação | `mw-alert--info` | `i` | Dados de exemplo |
+| Sucesso | `mw-alert--success` | `✓` | Rascunho salvo |
+| Atenção | `mw-alert--warning` | `!` | Confirme antes de avançar |
+| Erro | `mw-alert--danger` | `×` | Não foi possível ler o arquivo |
+
+Anatomia: `mw-alert__mark` (marca em IBM Plex Mono, `aria-hidden="true"`), `mw-alert__title` (fato, em uma linha) e `mw-alert__content` (o que ocorreu e como resolver). A marca e o título repetem o significado da cor. Alerta que aparece depois de uma ação usa `role="status"` (informação, sucesso) ou `role="alert"` (erro que bloqueia). Não fechar sozinho alertas de atenção ou erro.
+
 ### Modal e menu contextual
 
 Usar apenas quando o conteúdo interrompe menos a tarefa do que navegar para uma nova página. Dialog tem nome, descrição quando necessária, foco contido e retorno ao ponto de abertura. Menu contextual possui botão disparador e navegação de teclado previsível. Menu não serve para ocultar ação primária frequente.
@@ -462,6 +537,7 @@ Para fluxo de várias etapas, exibir quantidade ou nomes de etapas e indicar a a
 - Erros preservam entradas digitadas sempre que possível.
 - A interface deve funcionar em zoom de 200 por cento e com teclado.
 - Em motion reduzido, manter o estado final sem animar deslocamento, escala ou parallax.
+
 
 ---
 
@@ -524,3 +600,23 @@ Se houver erro, inclua a mensagem no `aria-describedby` e aplique `aria-invalid=
 4. Marcar alterações incompatíveis com versão maior e orientar migração.
 
 Este pacote ainda não usa um compilador de tokens. A sincronização entre JSON e CSS é editorial nesta versão.
+
+
+---
+
+## Histórico
+
+### 1.1.0 · 23 de setembro de 2026
+
+- **Tema escuro opcional.** Novo bloco `[data-theme="dark"]` em `tokens.css` e `themes.dark` em `tokens.json`.
+  - Motivo: oferecer leitura em ambiente escuro e interfaces de produto que pedem superfície escura.
+  - Impacto: nenhum no tema claro. Brand, reference e o filete cromático não mudam.
+  - Migração: nenhuma obrigatória. Para ativar, aplicar `data-theme="dark"` no `<html>` ou em um contêiner e trocar o logo por `logo-reverse.svg`.
+- **Tokens de componente.** Valores fixos de `components.css` viraram tokens (`--color-button-secondary-ink`, `--color-control-disabled-*`, `--color-feedback-danger-hover`, `--color-chip-neutral-*`, `--color-table-head`), com os mesmos valores no tema claro.
+  - Impacto: visual idêntico no tema claro. O texto do botão secundário passa a vir de `--color-button-secondary-ink` (`#000000`).
+- **Movimento documentado.** Tabela de uso de `--motion-fast`, `--motion-base`, `--motion-slow` e `--motion-ease-standard` em `GUIDE.md`.
+- **Alertas.** Variantes de sucesso e erro documentadas em `COMPONENTS.md`, com marca, título e papel ARIA, e demonstradas no catálogo.
+
+### 1.0.0 · 22 de setembro de 2026
+
+- Versão inicial para avaliação.

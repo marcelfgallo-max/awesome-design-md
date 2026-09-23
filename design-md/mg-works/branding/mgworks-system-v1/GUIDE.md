@@ -1,6 +1,6 @@
 # MG Works Design System
 
-Versão 1.0.0, rascunho de sistema, 22 de setembro de 2026.
+Versão 1.1.0, rascunho de sistema, 23 de setembro de 2026. Histórico em `CHANGELOG.md`.
 
 ## Papel do sistema
 
@@ -56,6 +56,10 @@ Preto, branco e laranja pertencem à identidade. Carvão, névoa, cinza claro e 
 - O filete em gradiente é um acento gráfico, não uma cor de texto nem uma assinatura de marca.
 
 Esses percentuais são guias de composição, não limites matemáticos. Materiais de alto contraste podem usar uma superfície preta dominante.
+
+### Tema escuro
+
+A partir da versão 1.1.0 o sistema tem um tema escuro opcional, ativado por `data-theme="dark"`. Ele troca texto, bordas, superfícies, feedback, sombras e foco (ver `TOKENS.md`). Preto, branco e laranja da identidade não mudam, e a composição escura continua reservada para capas e destaques quando o tema claro estiver ativo. No escuro, usar `logo-reverse.svg`.
 
 ## Tipografia
 
@@ -117,6 +121,21 @@ Preferir retângulos retos, círculos simples, recortes geométricos e linhas. C
 ## Movimento
 
 Movimento é breve, funcional e não essencial para compreender o conteúdo. Usar 120 ms para resposta simples, 180 ms para componentes e até 260 ms para painéis. Em `prefers-reduced-motion: reduce`, remover deslocamentos e transições não essenciais.
+
+
+### Tokens de movimento
+
+| Token | Valor | Quando usar |
+| --- | --- | --- |
+| `--motion-fast` | 120 ms | Resposta simples: hover, pressionado, cor, borda e foco de botões, campos e links |
+| `--motion-base` | 180 ms | Componentes: abrir menu, mostrar toast, expandir cartão ou acordeão |
+| `--motion-slow` | 260 ms | Painéis: gaveta lateral, modal, troca de painel |
+| `--motion-ease-standard` | `cubic-bezier(0.2, 0.75, 0.25, 1)` | Curva única do sistema, entrada rápida e assentamento suave |
+
+- Animar cor, opacidade e deslocamentos curtos (até 8 px). Evitar escala grande, rotação, parallax e efeitos elásticos.
+- Não animar dados, valores numéricos ou estados de erro para chamar atenção.
+- `components.css` já aplica `--motion-fast` com `--motion-ease-standard` em `mw-button`.
+- Em `prefers-reduced-motion: reduce`, reduzir a duração a praticamente zero e manter o estado final.
 
 ## Voz e conteúdo
 

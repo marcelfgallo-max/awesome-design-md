@@ -48,6 +48,48 @@ Sempre mostrar também um rótulo ou ícone com nome acessível. Feedback deve i
 - `--color-ink-subtle` não identifica erro, estado ou instrução indispensável. Usar em informação complementar com tamanho e contraste adequados.
 - Em dados, parear a cor com nome, forma ou padrão.
 
+## Tema escuro
+
+Adicionado na versão 1.1.0. Ativar com `data-theme="dark"` no `<html>` ou em um contêiner; sem o atributo, vale o tema claro. Cores de identidade (`--color-brand-*`, `--color-reference-*`) e `--color-signal-gradient` não mudam entre temas. Texto preto sobre laranja continua valendo no escuro.
+
+| Token CSS | Claro | Escuro | Contraste no escuro |
+| --- | --- | --- | --- |
+| `--color-ink-strong` | `#111111` | `#FFFFFF` | 17.4:1 sobre raised |
+| `--color-ink-default` | `#252424` | `#ECEDEE` | 14.9:1 sobre raised |
+| `--color-ink-muted` | `#62666B` | `#B4B7BC` | 8.7:1 sobre raised |
+| `--color-ink-subtle` | `#858A90` | `#8E9399` | 5.6:1 sobre raised |
+| `--color-border-strong` | `#8E9399` | `#7A7F86` | 3.8:1 sobre soft, limite de controle |
+| `--color-border-default` | `#CACBD2` | `#3A3B3E` | divisor decorativo |
+| `--color-border-subtle` | `#E6E7E9` | `#2A2A2C` | separador secundário |
+| `--color-surface-page` | `#F4F4F2` | `#0E0E0E` | fundo de página |
+| `--color-surface-raised` | `#FFFFFF` | `#1A1A1A` | cartões, campos, menus |
+| `--color-surface-soft` | `#ECEDEE` | `#252424` | superfície auxiliar (carvão) |
+| `--color-surface-inverse` | `#000000` | `#000000` | capa e rodapé |
+| `--color-feedback-success` / `-soft` | `#176B45` / `#E4F2EA` | `#5CC98E` / `#10281C` | 7.6:1 |
+| `--color-feedback-warning` / `-soft` | `#835000` / `#FFF1D8` | `#F2B24C` / `#2E2206` | 8.4:1 |
+| `--color-feedback-danger` / `-soft` | `#B42318` / `#FDE8E7` | `#FF8A7F` / `#3A1411` | 7.1:1 |
+| `--color-feedback-info` / `-soft` | `#005A86` / `#E2F3FA` | `#A3D6F4` / `#0C2433` | 10.3:1 |
+| `--shadow-card` | 8% | 40% | sombra mais densa para ler sobre fundo escuro |
+| `--shadow-overlay` | 18% | 60% | idem |
+| `--focus-ring` | laranja a 32% | laranja a 72% | anel visível sobre superfícies escuras |
+
+No tema escuro, usar `logo-reverse.svg` e o avatar preto. Laranja de marca sobre `#0E0E0E` mede 5.7:1 e pode ser usado como texto de destaque grande.
+
+### Tokens de componente
+
+Adicionados na versão 1.1.0 para substituir valores fixos em `components.css` e permitir o tema escuro.
+
+| Token CSS | Claro | Escuro | Uso |
+| --- | --- | --- | --- |
+| `--color-button-secondary-ink` | `#000000` | `#FFFFFF` | Texto do botão secundário |
+| `--color-control-disabled-ink` | `#666666` | `#8E9399` | Texto de controle desabilitado |
+| `--color-control-disabled-bg` | `#E3E3E3` | `#2A2A2C` | Fundo de controle desabilitado |
+| `--color-control-disabled-border` | `#D4D4D4` | `#3A3B3E` | Borda de controle desabilitado |
+| `--color-feedback-danger-hover` | `#FBD7D5` | `#4A1A16` | Hover do botão de perigo |
+| `--color-chip-neutral-ink` | `#30343A` | `#DADCE0` | Texto do chip neutro |
+| `--color-chip-neutral-bg` | `#E8E9EB` | `#2F3033` | Fundo do chip neutro |
+| `--color-table-head` | `#F5F5F4` | `#151515` | Fundo do cabeçalho de tabela |
+
 ## Tipografia
 
 ### Famílias

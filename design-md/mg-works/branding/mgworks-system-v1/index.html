@@ -164,7 +164,11 @@
 
     .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 20px 0 28px; }
     .component-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .component-card { padding: 20px; background: #fff; border: 1px solid var(--color-border-default); }
+    .component-card { padding: 20px; color: var(--color-ink-default); background: var(--color-surface-raised); border: 1px solid var(--color-border-default); }
+    .component-card h3 { color: var(--color-ink-strong); }
+    .dark-demo { margin-top: 28px; padding: 24px; color: var(--color-ink-default); background: var(--color-surface-page); border: 1px solid var(--color-border-default); }
+    .dark-demo .subhead { color: var(--color-ink-strong); }
+    .dark-demo .caption { color: var(--color-ink-muted); }
     .component-card h3 { margin: 0 0 16px; font-size: 15px; font-weight: 600; }
     .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .mw-table__caption { margin: 0; }
@@ -277,14 +281,14 @@
     <div class="rail-bottom">
       <div class="rail-signal" aria-hidden="true"></div>
       <p><strong>MG Works</strong> · AI, Design &amp; Technology</p>
-      <p>22.09.2026 · v1.0.0</p>
+      <p>23.09.2026 · v1.1.0</p>
     </div>
   </aside>
 
   <div class="workspace">
     <div class="topline">
       <div class="crumb"><strong>Design System</strong><span>/</span><span>Fundamentos e interface</span></div>
-      <span class="status-chip"><span class="status-dot" aria-hidden="true"></span>VERSÃO 1.0.0 · RASCUNHO</span>
+      <span class="status-chip"><span class="status-dot" aria-hidden="true"></span>VERSÃO 1.1.0 · RASCUNHO</span>
     </div>
 
     <main id="conteudo">
@@ -410,6 +414,39 @@
             <h3>Mensagem de atenção</h3>
             <div class="mw-alert mw-alert--warning"><span class="mw-alert__mark" aria-hidden="true">!</span><p class="mw-alert__content"><strong class="mw-alert__title">Confirme antes de avançar</strong>Informações ausentes continuam em aberto. A interface não deve presumir um valor.</p></div>
           </div>
+          <div class="component-card">
+            <h3>Mensagem de sucesso</h3>
+            <div class="mw-alert mw-alert--success" role="status"><span class="mw-alert__mark" aria-hidden="true">✓</span><p class="mw-alert__content"><strong class="mw-alert__title">Rascunho salvo</strong>As alterações ficam disponíveis para revisão.</p></div>
+          </div>
+          <div class="component-card">
+            <h3>Mensagem de erro</h3>
+            <div class="mw-alert mw-alert--danger"><span class="mw-alert__mark" aria-hidden="true">×</span><p class="mw-alert__content"><strong class="mw-alert__title">Não foi possível ler o arquivo</strong>Verifique o formato e tente enviar novamente.</p></div>
+          </div>
+        </div>
+        <div class="dark-demo" data-theme="dark" aria-label="Exemplo do tema escuro">
+          <h3 class="subhead">Tema escuro</h3>
+          <div class="button-row">
+            <button class="mw-button mw-button--primary" type="button">Continuar</button>
+            <button class="mw-button mw-button--secondary" type="button">Revisar detalhes</button>
+            <button class="mw-button mw-button--quiet" type="button">Salvar rascunho</button>
+            <button class="mw-button mw-button--danger" type="button">Excluir rascunho</button>
+            <button class="mw-button mw-button--secondary" type="button" disabled>Indisponível</button>
+          </div>
+          <div class="component-grid">
+            <div class="component-card">
+              <div class="mw-field"><label class="mw-field__label" for="nome-projeto-escuro">Nome do projeto</label><input class="mw-input" id="nome-projeto-escuro" name="project-name-dark" value="Direção de marca" aria-describedby="nome-ajuda-escuro"><small class="mw-field__help" id="nome-ajuda-escuro">Use o nome confirmado para este contexto.</small></div>
+            </div>
+            <div class="component-card">
+              <div class="chip-row"><span class="mw-chip mw-chip--neutral">Rascunho</span><span class="mw-chip mw-chip--success"><span class="mw-chip__mark" aria-hidden="true"></span>Concluído</span><span class="mw-chip mw-chip--warning"><span class="mw-chip__mark" aria-hidden="true"></span>Revisar</span><span class="mw-chip mw-chip--danger">Bloqueado</span><span class="mw-chip mw-chip--info">Atualizado</span></div>
+            </div>
+            <div class="component-card">
+              <div class="mw-alert mw-alert--info"><span class="mw-alert__mark" aria-hidden="true">i</span><p class="mw-alert__content"><strong class="mw-alert__title">Dados de exemplo</strong>Os nomes são fictícios.</p></div>
+            </div>
+            <div class="component-card">
+              <div class="mw-alert mw-alert--danger"><span class="mw-alert__mark" aria-hidden="true">×</span><p class="mw-alert__content"><strong class="mw-alert__title">Não foi possível ler o arquivo</strong>Verifique o formato e tente enviar novamente.</p></div>
+            </div>
+          </div>
+          <p class="caption">Ativado com <span class="mono">data-theme="dark"</span>. Identidade, laranja e filete cromático permanecem iguais.</p>
         </div>
       </section>
 

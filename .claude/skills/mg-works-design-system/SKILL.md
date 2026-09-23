@@ -5,7 +5,7 @@ description: Sistema visual MG Works (e camada digital compartilhada com Northbo
 
 # MG Works Design System
 
-O pacote completo está instalado em `design-md/mg-works/` (versão 1.0.0, 22/09/2026). Ele é a fonte de verdade — não invente valores.
+O pacote completo está instalado em `design-md/mg-works/` (versão 1.1.0, 23/09/2026; histórico em `branding/mgworks-system-v1/CHANGELOG.md`). Ele é a fonte de verdade — não invente valores.
 
 Versão no Claude Design (design system navegável): https://claude.ai/artifact/TbqF6PHUbrwmQ5GCcxad2E
 
@@ -30,4 +30,7 @@ Siga `design-md/mg-works/PROMPT-PARA-CLAUDE-CODE.md`: identificar framework, ent
 - Bordas de 1 px; contorno de 2 px ou `--focus-ring` para foco. Raio 4 px em controles, 8 px em cartões. Sombras mínimas.
 - Cor nunca é o único indicador de estado; status sempre escrito.
 - Nunca recriar, recolorir ou distorcer logotipos: usar os SVGs do pacote. Northbound mantém sua própria assinatura.
-- Movimento: 120 / 180 / 260 ms, `cubic-bezier(0.2, 0.75, 0.25, 1)`; respeitar `prefers-reduced-motion`.
+- Movimento: `--motion-fast` 120 ms (hover, foco, cor), `--motion-base` 180 ms (menus, toasts), `--motion-slow` 260 ms (painéis, modal), sempre com `--motion-ease-standard` `cubic-bezier(0.2, 0.75, 0.25, 1)`; respeitar `prefers-reduced-motion`.
+- Fontes por token: `--font-family-sans` (Archivo) e `--font-family-mono` (IBM Plex Mono); nunca escrever o nome da fonte solto no CSS.
+- Tema escuro: `data-theme="dark"` no `<html>` ou num contêiner; usar só tokens semânticos (`--color-ink-*`, `--color-surface-*`, `--color-border-*`, `--color-feedback-*`, tokens de componente) para que tudo troque; no escuro usar `logo-reverse.svg`. Cores de marca não mudam.
+- Alertas `mw-alert`: `--info` (i), `--success` (✓), `--warning` (!), `--danger` (×), sempre com título escrito; `role="status"` ou `role="alert"` quando aparecem após uma ação.
